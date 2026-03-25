@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rapport AKS | Yannick · Kubernetes sur Azure</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    @page {
+      size: A4;
+      margin: 2.2cm 2cm;
+    }
+
+    body {
+      background: #f0f2f8;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      font-size: 10.8pt;
+      line-height: 1.55;
+      color: #1a2634;
+      padding: 0 0 2rem 0;
+    }
+
+    /* container principal style moderne */
+    .report-container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      background: white;
+      border-radius: 36px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .content-padding {
+      padding: 2.5rem 2.8rem;
+    }
+
+    /* couverture premium */
+    .cover-modern {
+      background: linear-gradient(135deg, #0b2b3f 0%, #0f2c3d 50%, #0b2b3f 100%);
+      color: white;
+      text-align: center;
+      padding: 3.8rem 2rem 3rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .badge-afci {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(4px);
+      padding: 0.3rem 1rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      margin-bottom: 1.8rem;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .cover-modern h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #ffffff, #cbd5e6);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .cover-modern h2 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #bdd3ec;
+      margin-bottom: 1.8rem;
+    }
+
+    .cover-meta-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2.2rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 48px;
+      padding: 1rem 2rem;
+      max-width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+      backdrop-filter: blur(8px);
+    }
+
+    .cover-meta-item {
+      text-align: left;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: #e2edff;
+    }
+    .cover-meta-item strong {
+      color: white;
+      font-weight: 600;
+      display: block;
+      font-size: 0.9rem;
+    }
+
+    /* titres modernes */
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #0e2a3b;
+      margin: 1.2rem 0 0.6rem 0;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 3px solid #e2e9f2;
+      color: #1f4e6e;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 1.3rem 0 0.4rem 0;
+      color: #1e3a5f;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+      color: #2c3e4e;
+    }
+
+    /* liste stylisée */
+    ul {
+      margin: 0.5rem 0 0.8rem 1.5rem;
+    }
+    li {
+      margin: 0.35rem 0;
+    }
+
+    code {
+      background: #eef2f8;
+      padding: 0.2rem 0.4rem;
+      border-radius: 8px;
+      font-family: 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 0.85rem;
+      color: #c44536;
+    }
+
+    pre {
+      background: #0f1a24;
+      color: #dceeff;
+      padding: 1rem 1.2rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-family: 'Fira Code', monospace;
+      overflow-x: auto;
+      margin: 1rem 0 1.2rem 0;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+      border: 1px solid #203a4a;
+    }
+
+    .card-screenshot {
+      background: #f9fbfd;
+      border-radius: 28px;
+      box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.12);
+      margin: 1.6rem 0;
+      overflow: hidden;
+      transition: transform 0.2s ease;
+      border: 1px solid #eef2f8;
+    }
+
+    .card-screenshot img {
+      width: 100%;
+      display: block;
+      background: #eef2fa;
+      object-fit: cover;
+    }
+
+    figcaption {
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      background: #ffffff;
+      color: #4f6f8f;
+      border-top: 1px solid #eef2f8;
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+
+    .info-tag {
+      background: #eef4ff;
+      border-left: 4px solid #2c7cb6;
+      padding: 0.6rem 1rem;
+      border-radius: 16px;
+      margin: 0.8rem 0;
+      font-size: 0.85rem;
+    }
+
+    .grid-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1rem 0 1.5rem;
+    }
+    .stat-card {
+      background: #f7f9fc;
+      flex: 1;
+      border-radius: 24px;
+      padding: 1rem 1rem;
+      text-align: center;
+      border: 1px solid #e5ecf3;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #1f6392;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, #e2e9f2, transparent);
+      margin: 1rem 0;
+    }
+
+    .badge-tech {
+      display: inline-flex;
+      background: #ecf7f0;
+      color: #2c6e2f;
+      border-radius: 40px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-right: 0.4rem;
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.7rem;
+      border-top: 1px solid #eef2f8;
+      padding: 1.5rem 0 0.5rem;
+      color: #6c86a3;
+    }
+
+    @media (max-width: 700px) {
+      .content-padding {
+        padding: 1.5rem;
+      }
+      .cover-modern h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="report-container">
+  <!-- COUVERTURE ULTRA PRO -->
+  <div class="cover-modern">
+    <div class="badge-afci">AFCI · CLOUD NATIVE</div>
+    <h1>Kubernetes sur Azure</h1>
+    <h2>Déploiement full stack sur AKS</h2>
+    <div class="cover-meta-grid">
+      <div class="cover-meta-item"><strong>Yannick</strong> Auteur</div>
+      <div class="cover-meta-item"><strong>25 mars 2026</strong> Date</div>
+      <div class="cover-meta-item"><strong>AKS · PostgreSQL</strong> Stack</div>
+      <div class="cover-meta-item"><strong>GR-9</strong> Groupe ressource</div>
+    </div>
+  </div>
+
+  <div class="content-padding">
+    <!-- Sommaire épuré -->
+    <div style="background: #f9fafc; border-radius: 28px; padding: 1.2rem 1.8rem; margin-bottom: 2rem;">
+      <h2 style="margin-top: 0; border-bottom: none; font-size: 1.3rem;">📑 Navigation rapide</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.5rem; justify-content: space-between;">
+        <div style="column-count: 2; column-gap: 2rem;">
+          <p>1. Introduction</p><p>2. Kubernetes & concepts</p><p>3. Docker vs K8s</p><p>4. Pods / Deployments / Services</p>
+          <p>5. Architecture retenue</p><p>6. Environnement & contraintes</p><p>7. Provisioning AKS</p><p>8. Déploiement manifests</p>
+          <p>9. Validation & tests</p><p>10. Scalabilité démonstration</p><p>11. Résolution incidents</p><p>12. Conclusion</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1. Introduction -->
+    <h2>1. Introduction</h2>
+    <p>Ce rapport détaille la mise en œuvre d'une application multi-conteneurs sur <strong>Azure Kubernetes Service (AKS)</strong>. L’objectif était de déployer une architecture trois tiers — frontend Nginx, backend Node.js, base PostgreSQL —, exposer le frontend publiquement, garantir la communication interne et prouver la scalabilité horizontale.</p>
+    <p>Le cluster AKS a été provisionné avec un seul nœud (Standard_D2s_v3) dans le groupe de ressources <code>GR-9</code>. Tous les composants ont été orchestrés via des manifests YAML, en contournant intelligemment les restrictions d’Azure (absence d’ACR, limitations de VM).</p>
+
+    <!-- 2. Kubernetes présentation -->
+    <h2>2. Kubernetes — Orchestrateur de conteneurs</h2>
+    <p>Kubernetes (K8s) automatise le déploiement, la mise à l’échelle et la gestion d’applications conteneurisées. Il agit comme un chef d’orchestre : tolérance de panne, équilibrage de charge, stockage persistant, mises à jour sans interruption. Dans ce TP, K8s a coordonné les trois services de manière isolée et reproductible.</p>
+    <div class="info-tag"><strong>🔁 Valeur ajoutée :</strong> Redémarrage automatique des Pods défaillants, résolution de service interne via DNS, scaling instantané.</div>
+
+    <h2>3. Docker vs Kubernetes : différence fondamentale</h2>
+    <p>Docker construit et exécute des conteneurs unitaires ; Kubernetes orchestre des armadas de conteneurs sur plusieurs machines. Ici, Docker a servi à empaqueter la logique (images Node, Nginx, Postgres) tandis que K8s les a déployés, liés et supervisés dans le cloud Azure.</p>
+
+    <!-- 4. Pods/Deployments/Services -->
+    <h2>4. Pods, Deployments, Services — piliers K8s</h2>
+    <ul>
+      <li><strong>Pods</strong> : unité atomique, chaque composant (frontend, backend, postgres) a son propre Pod.</li>
+      <li><strong>Deployments</strong> : gestion des réplicas, mises à jour, stratégie de rollout. 3 Deployments ont été définis.</li>
+      <li><strong>Services</strong> : exposition réseau stable. Le <code>frontend-service</code> de type <code>LoadBalancer</code> a obtenu une IP publique. <code>backend-service</code> et <code>postgres-service</code> en ClusterIP assurent les communications internes.</li>
+    </ul>
+
+    <!-- 5. Architecture retenue -->
+    <h2>5. Architecture applicative</h2>
+    <pre>Utilisateur → LoadBalancer (IP publique) → Frontend (Nginx) → Backend (Node.js) → PostgreSQL (avec PVC)</pre>
+    <p>Le backend expose une API REST (<code>/api/health</code>, <code>/api/data</code>) qui incrémente un compteur de visites en base. Le frontend consomme cette API et affiche dynamiquement le résultat.</p>
+
+    <!-- 6. Contraintes -->
+    <h2>6. Environnement & contraintes techniques</h2>
+    <ul>
+      <li>❌ Docker Desktop indisponible (virtualisation désactivée)</li>
+      <li>❌ Registre ACR interdit par la souscription Azure</li>
+      <li>❌ SKU <code>Standard_B2s</code> non autorisé → bascule sur <code>Standard_D2s_v3</code></li>
+      <li>✅ Solution : ConfigMaps pour injecter le code backend/frontend, images publiques officielles, cluster éphémère</li>
+    </ul>
+
+    <!-- 7. Mise en place AKS -->
+    <h2>7. Provisioning du cluster AKS</h2>
+    <pre><code>az aks create --resource-group GR-9 --name aks-gr9-tp --location centralus \
+  --node-count 1 --node-vm-size Standard_D2s_v3 --enable-managed-identity --generate-ssh-keys</code></pre>
+    <p>Le cluster a été opérationnel en ~8 minutes. Contexte récupéré via <code>az aks get-credentials</code> puis validation avec <code>kubectl get nodes</code> (nœud <code>Ready</code>).</p>
+
+    <!-- Captures modernisées (présentation en cartes) -->
+    <div class="card-screenshot">
+      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-02-creation-aks.png" alt="Création du cluster AKS" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Capture+AKS+creation'; this.onerror=null;">
+      <figcaption>Figure 1 — Création du cluster AKS avec Azure CLI, taille Standard_D2s_v3</figcaption>
+    </div>
+    <div class="card-screenshot">
+      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-03-deploiement-yaml-1.png" alt="Déploiement YAML" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Application+des+manifests';">
+      <figcaption>Figure 2 — Application des manifests YAML après connexion kubectl</figcaption>
+    </div>
+
+    <h2>8. Déploiement Kubernetes complet</h2>
+    <p>Les manifests ont été appliqués dans l’ordre : namespace → secret PostgreSQL → déploiement & service Postgres → backend (avec ConfigMap contenant <code>server.js</code>) → frontend Nginx + ConfigMap nginx.conf.</p>
+    <pre><code>kubectl apply -f k8s/00-namespace.yaml
+kubectl apply -f k8s/01-secret.yaml
+kubectl apply -f k8s/02-postgres.yaml
+kubectl apply -f k8s/03-backend.yaml
+kubectl apply -f k8s/04-frontend.yaml</code></pre>
+    <div class="card-screenshot">
+      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-04-deploiement-yaml-2.png" alt="Ressources après déploiement" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=IP+publique+attribuée';">
+      <figcaption>Figure 3 — Services actifs : frontend LoadBalancer obtient IP 135.233.72.251</figcaption>
+    </div>
+
+    <!-- 9. Vérifications & tests -->
+    <h2>9. Validation fonctionnelle & tests</h2>
+    <div class="grid-stats">
+      <div class="stat-card"><div class="stat-number">✅ 3/3</div><div>Pods Running</div></div>
+      <div class="stat-card"><div class="stat-number">🌐 135.233.72.251</div><div>IP publique</div></div>
+      <div class="stat-card"><div class="stat-number">PostgreSQL</div><div>Persistance PVC</div></div>
+    </div>
+    <p>Depuis le navigateur, l’application frontend affiche un bouton “Tester l’application”. L’appel à <code>/api/data</code> a retourné un JSON contenant le compteur de visites, preuve irréfutable de la communication end-to-end (frontend → backend → base de données).</p>
+    <div class="card-screenshot">
+      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-06-application-test-ok.png" alt="Test API réussi" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=API+JSON+visits+incrémenté';">
+      <figcaption>Figure 4 — Réponse JSON du backend : communication complète validée, visits=1</figcaption>
+    </div>
+
+    <h2>10. Scalabilité — montée en charge du backend</h2>
+    <p>Pour simuler un pic de trafic, le deployment <code>backend</code> a été passé de 1 à 3 réplicas :</p>
+    <pre><code>kubectl scale deployment backend --replicas=3 -n tp-k8s</code></pre>
+    <p>Kubernetes a instantanément créé deux Pods supplémentaires. L'équilibrage de charge est automatique via le service ClusterIP. Cette démonstration confirme l'élasticité native de K8s.</p>
+    <div class="card-screenshot">
+      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-10-trois-backends-running.png" alt="Trois backends running" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=3+Pods+backend+en+Running';">
+      <figcaption>Figure 5 — Après scaling : trois instances backend actives et prêtes</figcaption>
+    </div>
+
+    <!-- 11. Difficultés -->
+    <h2>11. Résolution d’incidents & adaptations</h2>
+    <ul>
+      <li><strong>CrashLoopBackOff PostgreSQL :</strong> erreur "lost+found directory" → ajout de la variable <code>PGDATA: /var/lib/postgresql/data/pgdata</code> pour isoler le répertoire de données.</li>
+      <li><strong>Backend en échec :</strong> dossier <code>/app</code> manquant → commande <code>mkdir -p /app</code> dans le script init du conteneur.</li>
+      <li><strong>ACR bloqué :</strong> contournement par ConfigMap (code source injecté directement) + images publiques stables.</li>
+      <li><strong>VM SKU refusé :</strong> adoption de <code>Standard_D2s_v3</code> après vérification des offres régionales.</li>
+    </ul>
+    <div class="info-tag">💡 Ces corrections ont permis d’obtenir un environnement entièrement fonctionnel, sans dépendance à des services Azure supplémentaires.</div>
+    <div class="card-screenshot">
+      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-07-corrections-yaml.png" alt="Corrections YAML" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Corrections+appliquées';">
+      <figcaption>Figure 6 — Réapplication des manifests corrigés, tous les Pods passent à l’état Running</figcaption>
+    </div>
+
+    <!-- 12. Conclusion -->
+    <h2>12. Conclusion & livrables</h2>
+    <p>Le TP a atteint tous les objectifs : cluster AKS opérationnel, application trois tiers déployée, exposition publique, communications inter-services validées, scaling horizontal réussi. L'approche “ConfigMap + images publiques” a prouvé sa robustesse face aux restrictions cloud.</p>
+    <p>Ce projet illustre concrètement la puissance de Kubernetes : reproductibilité, auto-réparation, abstraction de l’infrastructure. L’architecture peut être étendue avec un ingress controller, des sondes de santé, et un stockage managé Azure.</p>
+    
+    <hr />
+    <h2>📎 Annexe : commandes essentielles</h2>
+    <pre><code># Connexion & cluster
+az login
+az aks create -g GR-9 -n aks-gr9-tp --node-count 1 --node-vm-size Standard_D2s_v3
+az aks get-credentials -g GR-9 -n aks-gr9-tp
+
+# Déploiement
+kubectl apply -f k8s/00-namespace.yaml
+kubectl apply -f k8s/01-secret.yaml
+kubectl apply -f k8s/02-postgres.yaml
+kubectl apply -f k8s/03-backend.yaml
+kubectl apply -f k8s/04-frontend.yaml
+
+# Vérifications
+kubectl get all -n tp-k8s
+kubectl get svc frontend-service -n tp-k8s
+
+# Scaling
+kubectl scale deployment backend --replicas=3 -n tp-k8s
+
+# Nettoyage
+az aks delete -g GR-9 -n aks-gr9-tp --yes
+</code></pre>
+    <div class="grid-stats" style="margin-bottom: 1rem;">
+      <div class="stat-card"><span class="badge-tech">🟢 Namespace</span> tp-k8s</div>
+      <div class="stat-card"><span class="badge-tech">📦 Postgres PVC</span> 1Gi</div>
+      <div class="stat-card"><span class="badge-tech">⚙️ Backend</span> Node.js 20 Alpine</div>
+      <div class="stat-card"><span class="badge-tech">🌍 Frontend</span> Nginx + reverse proxy</div>
+    </div>
+
+    <footer>
+      Rapport technique Kubernetes sur Azure — Yannick, AFCI Mars 2026 — Architecture validée, scaling opérationnel, résilience prouvée.
+    </footer>
+  </div>
+</div>
+</body>
+</html>
