@@ -598,3 +598,195 @@ kubectl get svc -n tp-k8s
     <ul>
       <li>le nom de l'application ;</li>
       <li>le nom de la technologie backend ;</li>
+      <li>le type de base de données ;</li>
+      <li>un message de confirmation ;</li>
+      <li>le compteur <code>visits</code>.</li>
+    </ul>
+    <p>Le test réussi a affiché :</p>
+    <pre><code>
+{
+  "application": "TP Kubernetes Azure",
+  "backend": "Node.js / Express",
+  "database": "PostgreSQL",
+  "message": "La communication frontend -> backend -> base de donnees fonctionne.",
+  "visits": 1
+}
+</code></pre>
+    <p>Cette réponse valide simultanément :</p>
+    <ul>
+      <li>l'accès à l'application depuis Internet ;</li>
+      <li>la communication entre frontend et backend ;</li>
+      <li>la communication entre backend et PostgreSQL ;</li>
+      <li>la persistance du compteur dans la base.</li>
+    </ul>
+    <h3>Figure 5 : interface de l'application avant exécution du test</h3>
+    <p>Cette capture montre l'application frontend exposée sur Internet avant l'appel API, avec le bouton <code>Tester l'application</code>.</p>
+    <div class="card-screenshot">
+      <img src="Images/capture-05-application-avant-test.png" alt="Application avant test" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Application+avant+test';">
+      <figcaption>Figure 5 — Application frontend avant exécution du test</figcaption>
+    </div>
+    <h3>Figure 6 : test fonctionnel réussi avec retour JSON</h3>
+    <p>Cette capture constitue la preuve principale de bon fonctionnement. On y voit le message de succès ainsi que la réponse JSON retournée par le backend après interrogation de PostgreSQL.</p>
+    <div class="card-screenshot">
+      <img src="Images/capture-06-application-test-ok.png" alt="Application test réussi" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Test+réussi';">
+      <figcaption>Figure 6 — Test fonctionnel réussi avec retour JSON</figcaption>
+    </div>
+    <h3>9.3 Vérification des logs</h3>
+    <p>Les logs du backend ont également montré :</p>
+    <ul>
+      <li>l'installation correcte des dépendances Node.js ;</li>
+      <li>le démarrage du serveur Express ;</li>
+      <li>l'absence de vulnérabilités détectées lors de l'installation <code>npm</code>.</li>
+    </ul>
+    <p>Une commande telle que <code>kubectl logs deployment/backend -n tp-k8s</code> a permis de confirmer que le backend était bien lancé sur le port 3000.</p>
+    
+    <hr class="section-break" />
+    
+    <!-- 10. Démonstration de la scalabilité -->
+    <h2>10. Démonstration de la scalabilité</h2>
+    <p>L'une des exigences du TP était de démontrer la montée en charge de l'application.</p>
+    <p>Pour cela, le Deployment <code>backend</code> a d'abord été observé avec un seul replica. Ensuite, la commande suivante a été lancée :</p>
+    <pre><code>kubectl scale deployment backend --replicas=3 -n tp-k8s</code></pre>
+    <p>Kubernetes a alors automatiquement créé deux nouveaux Pods backend supplémentaires. Après quelques instants, l'état final est devenu :</p>
+    <pre><code>
+backend-6b88d865db-6tncj    1/1 Running
+backend-6b88d865db-st6bx    1/1 Running
+backend-6b88d865db-xcwbg    1/1 Running
+frontend-6c4d998cc4-rxcbq   1/1 Running
+postgres-c66ff6574-lxdzv    1/1 Running
+</code></pre>
+    <p>Cette opération démontre que Kubernetes peut :</p>
+    <ul>
+      <li>répliquer automatiquement un composant ;</li>
+      <li>maintenir le service disponible ;</li>
+      <li>distribuer les requêtes entre plusieurs instances.</li>
+    </ul>
+    <p>Dans un contexte réel, cette logique permettrait d'absorber une augmentation du trafic sans interrompre l'application.</p>
+    <h3>Figure 7 : état stable de l'application avant la montée en charge</h3>
+    <p>Cette capture regroupe les principales preuves techniques avant le scaling :</p>
+    <ul>
+      <li><code>kubectl get all -n tp-k8s</code></li>
+      <li>présence de l'IP publique du frontend</li>
+      <li>logs du backend confirmant le démarrage sur le port 3000</li>
+      <li>lancement de la commande de scaling</li>
+    </ul>
+    <div class="card-screenshot">
+      <img src="Images/capture-08-preuves-avant-scaling.png" alt="Preuves avant scaling" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Preuves+avant+scaling';">
+      <figcaption>Figure 7 — Preuves techniques avant la montée en charge</figcaption>
+    </div>
+    <h3>Figure 8 : création des nouveaux Pods backend lors du scaling</h3>
+    <p>Cette capture montre l'effet immédiat de la commande <code>kubectl scale deployment backend --replicas=3 -n tp-k8s</code>. Deux nouveaux Pods backend apparaissent en phase <code>ContainerCreating</code>.</p>
+    <div class="card-screenshot">
+      <img src="Images/capture-09-scaling-en-cours.png" alt="Scaling en cours" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Scaling+en+cours';">
+      <figcaption>Figure 8 — Scaling en cours : création des nouveaux Pods backend</figcaption>
+    </div>
+    <h3>Figure 9 : trois Pods backend en état Running</h3>
+    <p>Cette capture valide l'état final attendu après la montée en charge, avec trois Pods backend actifs et prêts à recevoir des requêtes.</p>
+    <div class="card-screenshot">
+      <img src="Images/capture-10-trois-backends-running.png" alt="Trois pods backend" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Trois+Pods+backend';">
+      <figcaption>Figure 9 — Trois Pods backend en état Running après scaling</figcaption>
+    </div>
+    
+    <hr class="section-break" />
+    
+    <!-- 11. Difficultés rencontrées et corrections apportées -->
+    <h2>11. Difficultés rencontrées et corrections apportées</h2>
+    <p>Plusieurs difficultés concrètes ont été rencontrées pendant ce TP.</p>
+    <h3>11.1 Problème de virtualisation Docker Desktop</h3>
+    <p>Docker Desktop a été installé, mais son démarrage a échoué car la virtualisation n'était pas activée sur le poste. Il n'était donc pas possible de construire localement les images Docker de manière classique.</p>
+    <p><strong>Solution retenue :</strong> abandonner Docker local et s'orienter vers un déploiement ne dépendant pas d'un moteur Docker local.</p>
+    <h3>11.2 Impossibilité de créer un registre ACR</h3>
+    <p>La souscription n'était pas autorisée à utiliser <code>Microsoft.ContainerRegistry</code>, et l'utilisateur ne disposait pas des droits pour enregistrer ce provider.</p>
+    <p><strong>Solution retenue :</strong> ne pas utiliser ACR et injecter le code applicatif via <code>ConfigMap</code> en s'appuyant sur des images publiques.</p>
+    <h3>11.3 Taille de VM AKS non autorisée</h3>
+    <p>La taille <code>Standard_B2s</code> initialement prévue pour limiter les coûts n'était pas disponible dans la souscription.</p>
+    <p><strong>Solution retenue :</strong> utiliser <code>Standard_D2s_v3</code>, qui figurait dans la liste des tailles autorisées.</p>
+    <h3>11.4 CrashLoopBackOff sur PostgreSQL</h3>
+    <p>Au premier déploiement, PostgreSQL échouait avec l'erreur suivante :</p>
+    <pre><code>
+initdb: error: directory "/var/lib/postgresql/data" exists but is not empty
+initdb: detail: It contains a lost+found directory
+</code></pre>
+    <p>Le problème venait du fait que PostgreSQL initialisait sa base directement à la racine du volume monté.</p>
+    <p><strong>Correction apportée :</strong> ajout de la variable d'environnement :</p>
+    <pre><code>PGDATA: /var/lib/postgresql/data/pgdata</code></pre>
+    <p>Cela a permis à PostgreSQL d'écrire dans un sous-répertoire propre du volume.</p>
+    <h3>11.5 CrashLoopBackOff sur le backend</h3>
+    <p>Le backend échouait car le script de démarrage tentait de copier des fichiers dans <code>/app</code> alors que ce dossier n'existait pas.</p>
+    <p><strong>Correction apportée :</strong> ajout de la commande :</p>
+    <pre><code>mkdir -p /app</code></pre>
+    <p>avant la copie des fichiers depuis la <code>ConfigMap</code>.</p>
+    <h3>Figure 10 : correction des manifests et retour à un état stable</h3>
+    <p>Cette capture montre la réapplication des manifests corrigés, la suppression des anciens Pods défaillants et le retour à un état <code>Running</code> du frontend, du backend et de PostgreSQL.</p>
+    <div class="card-screenshot">
+      <img src="Images/capture-07-corrections-yaml.png" alt="Corrections YAML et test" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Corrections+YAML';">
+      <figcaption>Figure 10 — Corrections des manifests et retour à un état stable</figcaption>
+    </div>
+    <p>Ces corrections ont permis d'obtenir un fonctionnement normal de l'ensemble de la chaîne applicative.</p>
+    
+    <hr class="section-break" />
+    
+    <!-- 12. Conclusion -->
+    <h2>12. Conclusion</h2>
+    <p>Ce TP a permis de mettre en œuvre un déploiement Kubernetes complet sur Azure, malgré plusieurs contraintes techniques liées à l'environnement de formation et aux limitations de la souscription.</p>
+    <p>Les objectifs demandés ont été atteints :</p>
+    <ul>
+      <li>Kubernetes a été présenté et expliqué ;</li>
+      <li>un cluster AKS a été créé et configuré ;</li>
+      <li>une application composée d'un frontend, d'un backend et d'une base PostgreSQL a été déployée ;</li>
+      <li>l'application a été exposée sur Internet ;</li>
+      <li>les communications entre services ont été démontrées ;</li>
+      <li>la montée en charge du backend a été validée par un passage de 1 à 3 réplicas.</li>
+    </ul>
+    <p>Au-delà du simple résultat final, ce TP a également montré l'intérêt pratique de Kubernetes dans un environnement cloud :</p>
+    <ul>
+      <li>déploiement reproductible ;</li>
+      <li>séparation claire des composants ;</li>
+      <li>gestion simplifiée du réseau interne ;</li>
+      <li>possibilité de scaler un service rapidement ;</li>
+      <li>meilleure résilience applicative.</li>
+    </ul>
+    <p>Enfin, l'expérience a mis en évidence l'importance de l'adaptation technique. Face aux limites rencontrées, il a fallu ajuster la solution sans perdre l'objectif principal. Le résultat final reste conforme aux attentes du sujet et constitue une démonstration concrète d'un déploiement cloud moderne sur Azure avec Kubernetes.</p>
+    
+    <hr class="section-break" />
+    
+    <!-- Annexes techniques -->
+    <h2>Annexes techniques</h2>
+    <h3>Principales commandes utilisées</h3>
+    <pre><code>
+az login
+az aks create --resource-group GR-9 --name aks-gr9-tp --location centralus --node-count 1 --node-vm-size Standard_D2s_v3 --enable-managed-identity --generate-ssh-keys
+az aks get-credentials --resource-group GR-9 --name aks-gr9-tp --overwrite-existing
+
+kubectl apply -f .\k8s\00-namespace.yaml
+kubectl apply -f .\k8s\01-secret.yaml
+kubectl apply -f .\k8s\02-postgres.yaml
+kubectl apply -f .\k8s\03-backend.yaml
+kubectl apply -f .\k8s\04-frontend.yaml
+
+kubectl get all -n tp-k8s
+kubectl get svc -n tp-k8s
+kubectl logs deployment/backend -n tp-k8s
+kubectl scale deployment backend --replicas=3 -n tp-k8s
+kubectl get pods -n tp-k8s
+
+az aks delete --resource-group GR-9 --name aks-gr9-tp --yes
+</code></pre>
+    <h3>Fichiers principaux du projet</h3>
+    <ul>
+      <li><code>k8s/00-namespace.yaml</code></li>
+      <li><code>k8s/01-secret.yaml</code></li>
+      <li><code>k8s/02-postgres.yaml</code></li>
+      <li><code>k8s/03-backend.yaml</code></li>
+      <li><code>k8s/04-frontend.yaml</code></li>
+      <li><code>README.md</code></li>
+    </ul>
+
+    <footer>
+      Rapport technique Kubernetes sur Azure — Yannick, AFCI — 25 mars 2026<br>
+      Architecture validée, scaling opérationnel, résilience prouvée.
+    </footer>
+  </div>
+</div>
+</body>
+</html>
