@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rapport AKS | Yannick · Kubernetes sur Azure</title>
+  <title>Rapport TP Kubernetes Azure | Yannick · AKS</title>
   <style>
     * {
       margin: 0;
@@ -25,7 +25,6 @@
       padding: 0 0 2rem 0;
     }
 
-    /* container principal style moderne */
     .report-container {
       max-width: 1100px;
       margin: 2rem auto;
@@ -33,14 +32,12 @@
       border-radius: 36px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
       overflow: hidden;
-      transition: all 0.2s;
     }
 
     .content-padding {
       padding: 2.5rem 2.8rem;
     }
 
-    /* couverture premium */
     .cover-modern {
       background: linear-gradient(135deg, #0b2b3f 0%, #0f2c3d 50%, #0b2b3f 100%);
       color: white;
@@ -108,7 +105,6 @@
       font-size: 0.9rem;
     }
 
-    /* titres modernes */
     h1 {
       font-size: 1.9rem;
       font-weight: 700;
@@ -137,9 +133,9 @@
     p {
       margin-bottom: 0.75rem;
       color: #2c3e4e;
+      text-align: justify;
     }
 
-    /* liste stylisée */
     ul {
       margin: 0.5rem 0 0.8rem 1.5rem;
     }
@@ -175,7 +171,6 @@
       box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.12);
       margin: 1.6rem 0;
       overflow: hidden;
-      transition: transform 0.2s ease;
       border: 1px solid #eef2f8;
     }
 
@@ -193,9 +188,7 @@
       background: #ffffff;
       color: #4f6f8f;
       border-top: 1px solid #eef2f8;
-      font-style: normal;
-      font-weight: 500;
-      letter-spacing: 0.2px;
+      font-style: italic;
     }
 
     .info-tag {
@@ -217,7 +210,7 @@
       background: #f7f9fc;
       flex: 1;
       border-radius: 24px;
-      padding: 1rem 1rem;
+      padding: 1rem;
       text-align: center;
       border: 1px solid #e5ecf3;
     }
@@ -234,15 +227,14 @@
       margin: 1rem 0;
     }
 
-    .badge-tech {
-      display: inline-flex;
-      background: #ecf7f0;
-      color: #2c6e2f;
-      border-radius: 40px;
-      padding: 0.2rem 0.7rem;
-      font-size: 0.7rem;
-      font-weight: 600;
-      margin-right: 0.4rem;
+    .section-break {
+      border: 0;
+      border-top: 1px solid #dbe4ee;
+      margin: 0.8rem 0;
+    }
+
+    .toc-line {
+      margin: 0.1rem 0;
     }
 
     footer {
@@ -266,171 +258,343 @@
 </head>
 <body>
 <div class="report-container">
-  <!-- COUVERTURE ULTRA PRO -->
+  <!-- COUVERTURE MODERNE -->
   <div class="cover-modern">
-    <div class="badge-afci">AFCI · CLOUD NATIVE</div>
-    <h1>Kubernetes sur Azure</h1>
-    <h2>Déploiement full stack sur AKS</h2>
+    <div class="badge-afci">AFCI</div>
+    <h1>Rapport de TP</h1>
+    <h2>Kubernetes sur Azure</h2>
+    <p style="color: #bdd3ec; margin-bottom: 1rem;">Déploiement d'une application multi-conteneurs sur Azure Kubernetes Service (AKS)</p>
     <div class="cover-meta-grid">
-      <div class="cover-meta-item"><strong>Yannick</strong> Auteur</div>
-      <div class="cover-meta-item"><strong>25 mars 2026</strong> Date</div>
-      <div class="cover-meta-item"><strong>AKS · PostgreSQL</strong> Stack</div>
-      <div class="cover-meta-item"><strong>GR-9</strong> Groupe ressource</div>
+      <div class="cover-meta-item"><strong>Centre de formation</strong> AFCI</div>
+      <div class="cover-meta-item"><strong>Auteur</strong> Yannick</div>
+      <div class="cover-meta-item"><strong>Date</strong> 25 mars 2026</div>
+      <div class="cover-meta-item"><strong>Environnement</strong> Azure, AKS, Kubernetes, PostgreSQL, Node.js, Nginx</div>
     </div>
   </div>
 
   <div class="content-padding">
-    <!-- Sommaire épuré -->
-    <div style="background: #f9fafc; border-radius: 28px; padding: 1.2rem 1.8rem; margin-bottom: 2rem;">
-      <h2 style="margin-top: 0; border-bottom: none; font-size: 1.3rem;">📑 Navigation rapide</h2>
-      <div style="display: flex; flex-wrap: wrap; gap: 0.8rem 1.5rem; justify-content: space-between;">
-        <div style="column-count: 2; column-gap: 2rem;">
-          <p>1. Introduction</p><p>2. Kubernetes & concepts</p><p>3. Docker vs K8s</p><p>4. Pods / Deployments / Services</p>
-          <p>5. Architecture retenue</p><p>6. Environnement & contraintes</p><p>7. Provisioning AKS</p><p>8. Déploiement manifests</p>
-          <p>9. Validation & tests</p><p>10. Scalabilité démonstration</p><p>11. Résolution incidents</p><p>12. Conclusion</p>
-        </div>
-      </div>
-    </div>
-
+    <!-- Informations générales -->
+    <h2>Informations générales</h2>
+    <p><strong>Centre de formation :</strong> AFCI</p>
+    <p><strong>Sujet :</strong> Kubernetes sur Azure</p>
+    <p><strong>Plateforme cloud :</strong> Microsoft Azure</p>
+    <p><strong>Service principal utilisé :</strong> Azure Kubernetes Service (AKS)</p>
+    <p><strong>Groupe de ressources :</strong> GR-9</p>
+    <p><strong>Cluster créé :</strong> aks-gr9-tp</p>
+    <p><strong>Objectif :</strong> Déployer, exposer et scaler une application complète</p>
+    
+    <hr class="section-break" />
+    
+    <!-- Sommaire complet -->
+    <h2>Sommaire</h2>
+    <p class="toc-line">1. Introduction</p>
+    <p class="toc-line">2. Présentation de Kubernetes</p>
+    <p class="toc-line">3. Différence entre Docker et Kubernetes</p>
+    <p class="toc-line">4. Rôle des Pods, Deployments et Services</p>
+    <p class="toc-line">5. Architecture retenue pour le TP</p>
+    <p class="toc-line">6. Environnement et contraintes du projet</p>
+    <p class="toc-line">7. Mise en place de l'environnement Azure</p>
+    <p class="toc-line">8. Déploiement Kubernetes de l'application</p>
+    <p class="toc-line">9. Vérifications techniques et tests</p>
+    <p class="toc-line">10. Démonstration de la scalabilité</p>
+    <p class="toc-line">11. Difficultés rencontrées et corrections apportées</p>
+    <p class="toc-line">12. Conclusion</p>
+    
+    <hr class="section-break" />
+    
     <!-- 1. Introduction -->
     <h2>1. Introduction</h2>
-    <p>Ce rapport détaille la mise en œuvre d'une application multi-conteneurs sur <strong>Azure Kubernetes Service (AKS)</strong>. L’objectif était de déployer une architecture trois tiers — frontend Nginx, backend Node.js, base PostgreSQL —, exposer le frontend publiquement, garantir la communication interne et prouver la scalabilité horizontale.</p>
-    <p>Le cluster AKS a été provisionné avec un seul nœud (Standard_D2s_v3) dans le groupe de ressources <code>GR-9</code>. Tous les composants ont été orchestrés via des manifests YAML, en contournant intelligemment les restrictions d’Azure (absence d’ACR, limitations de VM).</p>
-
-    <!-- 2. Kubernetes présentation -->
-    <h2>2. Kubernetes — Orchestrateur de conteneurs</h2>
-    <p>Kubernetes (K8s) automatise le déploiement, la mise à l’échelle et la gestion d’applications conteneurisées. Il agit comme un chef d’orchestre : tolérance de panne, équilibrage de charge, stockage persistant, mises à jour sans interruption. Dans ce TP, K8s a coordonné les trois services de manière isolée et reproductible.</p>
-    <div class="info-tag"><strong>🔁 Valeur ajoutée :</strong> Redémarrage automatique des Pods défaillants, résolution de service interne via DNS, scaling instantané.</div>
-
-    <h2>3. Docker vs Kubernetes : différence fondamentale</h2>
-    <p>Docker construit et exécute des conteneurs unitaires ; Kubernetes orchestre des armadas de conteneurs sur plusieurs machines. Ici, Docker a servi à empaqueter la logique (images Node, Nginx, Postgres) tandis que K8s les a déployés, liés et supervisés dans le cloud Azure.</p>
-
-    <!-- 4. Pods/Deployments/Services -->
-    <h2>4. Pods, Deployments, Services — piliers K8s</h2>
+    <p>Dans le cadre de ce TP, l'objectif était de mettre en pratique le déploiement d'une application conteneurisée sur Microsoft Azure à l'aide de Kubernetes. Le sujet demandait à la fois une partie théorique sur Kubernetes et une partie pratique consistant à mettre en place un cluster, déployer une application en plusieurs composants, exposer cette application sur Internet, puis démontrer sa montée en charge.</p>
+    <p>Le travail réalisé s'appuie sur un déploiement concret d'une application composée de trois éléments :</p>
     <ul>
-      <li><strong>Pods</strong> : unité atomique, chaque composant (frontend, backend, postgres) a son propre Pod.</li>
-      <li><strong>Deployments</strong> : gestion des réplicas, mises à jour, stratégie de rollout. 3 Deployments ont été définis.</li>
-      <li><strong>Services</strong> : exposition réseau stable. Le <code>frontend-service</code> de type <code>LoadBalancer</code> a obtenu une IP publique. <code>backend-service</code> et <code>postgres-service</code> en ClusterIP assurent les communications internes.</li>
+      <li>un <strong>frontend</strong> accessible depuis Internet ;</li>
+      <li>un <strong>backend</strong> exposant une API REST ;</li>
+      <li>une <strong>base de données PostgreSQL</strong> utilisée par le backend.</li>
     </ul>
-
-    <!-- 5. Architecture retenue -->
-    <h2>5. Architecture applicative</h2>
-    <pre>Utilisateur → LoadBalancer (IP publique) → Frontend (Nginx) → Backend (Node.js) → PostgreSQL (avec PVC)</pre>
-    <p>Le backend expose une API REST (<code>/api/health</code>, <code>/api/data</code>) qui incrémente un compteur de visites en base. Le frontend consomme cette API et affiche dynamiquement le résultat.</p>
-
-    <!-- 6. Contraintes -->
-    <h2>6. Environnement & contraintes techniques</h2>
-    <ul>
-      <li>❌ Docker Desktop indisponible (virtualisation désactivée)</li>
-      <li>❌ Registre ACR interdit par la souscription Azure</li>
-      <li>❌ SKU <code>Standard_B2s</code> non autorisé → bascule sur <code>Standard_D2s_v3</code></li>
-      <li>✅ Solution : ConfigMaps pour injecter le code backend/frontend, images publiques officielles, cluster éphémère</li>
-    </ul>
-
-    <!-- 7. Mise en place AKS -->
-    <h2>7. Provisioning du cluster AKS</h2>
-    <pre><code>az aks create --resource-group GR-9 --name aks-gr9-tp --location centralus \
-  --node-count 1 --node-vm-size Standard_D2s_v3 --enable-managed-identity --generate-ssh-keys</code></pre>
-    <p>Le cluster a été opérationnel en ~8 minutes. Contexte récupéré via <code>az aks get-credentials</code> puis validation avec <code>kubectl get nodes</code> (nœud <code>Ready</code>).</p>
-
-    <!-- Captures modernisées (présentation en cartes) -->
-    <div class="card-screenshot">
-      <img src="Images/capture-02-creation-aks.png" alt="Création du cluster AKS" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Capture+AKS+creation'; this.onerror=null;">
-      <figcaption>Figure 1 — Création du cluster AKS avec Azure CLI, taille Standard_D2s_v3</figcaption>
-    </div>
-    <div class="card-screenshot">
-      <img src="Images/capture-03-deploiement-yaml-1.png" alt="Déploiement YAML" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Application+des+manifests';">
-      <figcaption>Figure 2 — Application des manifests YAML après connexion kubectl</figcaption>
-    </div>
-
-    <h2>8. Déploiement Kubernetes complet</h2>
-    <p>Les manifests ont été appliqués dans l’ordre : namespace → secret PostgreSQL → déploiement & service Postgres → backend (avec ConfigMap contenant <code>server.js</code>) → frontend Nginx + ConfigMap nginx.conf.</p>
-    <pre><code>kubectl apply -f k8s/00-namespace.yaml
-kubectl apply -f k8s/01-secret.yaml
-kubectl apply -f k8s/02-postgres.yaml
-kubectl apply -f k8s/03-backend.yaml
-kubectl apply -f k8s/04-frontend.yaml</code></pre>
-    <div class="card-screenshot">
-      <img src="Images/capture-04-deploiement-yaml-2.png" alt="Ressources après déploiement" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=IP+publique+attribuée';">
-      <figcaption>Figure 3 — Services actifs : frontend LoadBalancer obtient IP 135.233.72.251</figcaption>
-    </div>
-
-    <!-- 9. Vérifications & tests -->
-    <h2>9. Validation fonctionnelle & tests</h2>
-    <div class="grid-stats">
-      <div class="stat-card"><div class="stat-number">✅ 3/3</div><div>Pods Running</div></div>
-      <div class="stat-card"><div class="stat-number">🌐 135.233.72.251</div><div>IP publique</div></div>
-      <div class="stat-card"><div class="stat-number">PostgreSQL</div><div>Persistance PVC</div></div>
-    </div>
-    <p>Depuis le navigateur, l’application frontend affiche un bouton “Tester l’application”. L’appel à <code>/api/data</code> a retourné un JSON contenant le compteur de visites, preuve irréfutable de la communication end-to-end (frontend → backend → base de données).</p>
-    <div class="card-screenshot">
-      <img src="Images/capture-06-application-test-ok.png" alt="Test API réussi" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=API+JSON+visits+incrémenté';">
-      <figcaption>Figure 4 — Réponse JSON du backend : communication complète validée, visits=1</figcaption>
-    </div>
-
-    <h2>10. Scalabilité — montée en charge du backend</h2>
-    <p>Pour simuler un pic de trafic, le deployment <code>backend</code> a été passé de 1 à 3 réplicas :</p>
-    <pre><code>kubectl scale deployment backend --replicas=3 -n tp-k8s</code></pre>
-    <p>Kubernetes a instantanément créé deux Pods supplémentaires. L'équilibrage de charge est automatique via le service ClusterIP. Cette démonstration confirme l'élasticité native de K8s.</p>
-    <div class="card-screenshot">
-      <img src="Images/capture-10-trois-backends-running.png" alt="Trois backends running" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=3+Pods+backend+en+Running';">
-      <figcaption>Figure 5 — Après scaling : trois instances backend actives et prêtes</figcaption>
-    </div>
-
-    <!-- 11. Difficultés -->
-    <h2>11. Résolution d’incidents & adaptations</h2>
-    <ul>
-      <li><strong>CrashLoopBackOff PostgreSQL :</strong> erreur "lost+found directory" → ajout de la variable <code>PGDATA: /var/lib/postgresql/data/pgdata</code> pour isoler le répertoire de données.</li>
-      <li><strong>Backend en échec :</strong> dossier <code>/app</code> manquant → commande <code>mkdir -p /app</code> dans le script init du conteneur.</li>
-      <li><strong>ACR bloqué :</strong> contournement par ConfigMap (code source injecté directement) + images publiques stables.</li>
-      <li><strong>VM SKU refusé :</strong> adoption de <code>Standard_D2s_v3</code> après vérification des offres régionales.</li>
-    </ul>
-    <div class="info-tag">💡 Ces corrections ont permis d’obtenir un environnement entièrement fonctionnel, sans dépendance à des services Azure supplémentaires.</div>
-    <div class="card-screenshot">
-      <img src="Images/capture-07-corrections-yaml.png" alt="Corrections YAML" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Corrections+appliquées';">
-      <figcaption>Figure 6 — Réapplication des manifests corrigés, tous les Pods passent à l’état Running</figcaption>
-    </div>
-
-    <!-- 12. Conclusion -->
-    <h2>12. Conclusion & livrables</h2>
-    <p>Le TP a atteint tous les objectifs : cluster AKS opérationnel, application trois tiers déployée, exposition publique, communications inter-services validées, scaling horizontal réussi. L'approche “ConfigMap + images publiques” a prouvé sa robustesse face aux restrictions cloud.</p>
-    <p>Ce projet illustre concrètement la puissance de Kubernetes : reproductibilité, auto-réparation, abstraction de l’infrastructure. L’architecture peut être étendue avec un ingress controller, des sondes de santé, et un stockage managé Azure.</p>
+    <p>L'application finale a été déployée sur un cluster <strong>AKS</strong> (Azure Kubernetes Service) créé dans Azure. Le frontend a été rendu accessible publiquement via un service de type <code>LoadBalancer</code>, tandis que le backend et la base de données ont été maintenus dans le cluster via des services de type <code>ClusterIP</code>.</p>
+    <p>Ce rapport présente les notions théoriques essentielles, la démarche de réalisation, les contraintes du contexte de formation, les corrections apportées en cours de déploiement et les preuves de bon fonctionnement obtenues. L'objectif est de fournir un document clair, structuré et exploitable comme rendu de formation.</p>
     
-    <hr />
-    <h2>📎 Annexe : commandes essentielles</h2>
-    <pre><code># Connexion & cluster
-az login
-az aks create -g GR-9 -n aks-gr9-tp --node-count 1 --node-vm-size Standard_D2s_v3
-az aks get-credentials -g GR-9 -n aks-gr9-tp
-
-# Déploiement
-kubectl apply -f k8s/00-namespace.yaml
-kubectl apply -f k8s/01-secret.yaml
-kubectl apply -f k8s/02-postgres.yaml
-kubectl apply -f k8s/03-backend.yaml
-kubectl apply -f k8s/04-frontend.yaml
-
-# Vérifications
-kubectl get all -n tp-k8s
-kubectl get svc frontend-service -n tp-k8s
-
-# Scaling
-kubectl scale deployment backend --replicas=3 -n tp-k8s
-
-# Nettoyage
-az aks delete -g GR-9 -n aks-gr9-tp --yes
+    <hr class="section-break" />
+    
+    <!-- 2. Présentation de Kubernetes -->
+    <h2>2. Présentation de Kubernetes</h2>
+    <p>Kubernetes est une plateforme open source d'orchestration de conteneurs. Son rôle est de permettre le déploiement, la supervision, la mise à l'échelle et la gestion d'applications composées de conteneurs.</p>
+    <p>Dans un environnement classique, il est possible d'exécuter un conteneur Docker sur une machine. Cependant, dès que l'application devient plus complexe, par exemple lorsqu'elle contient plusieurs services ou lorsqu'elle doit rester disponible même en cas de panne, il devient nécessaire de disposer d'un système capable d'automatiser cette gestion. Kubernetes répond précisément à ce besoin.</p>
+    <p>Les principales fonctionnalités offertes par Kubernetes sont les suivantes :</p>
+    <ul>
+      <li>déploiement automatisé d'applications conteneurisées ;</li>
+      <li>redémarrage automatique des composants en cas de panne ;</li>
+      <li>répartition de charge ;</li>
+      <li>gestion du réseau entre services ;</li>
+      <li>mise à l'échelle horizontale ;</li>
+      <li>mises à jour progressives des applications ;</li>
+      <li>abstraction de l'infrastructure sous-jacente.</li>
+    </ul>
+    <p>Dans ce TP, Kubernetes a été utilisé pour exécuter et coordonner les trois briques de l'application. Cela a permis d'isoler les composants, de définir leurs interactions et de reproduire une architecture proche d'un environnement professionnel.</p>
+    
+    <hr class="section-break" />
+    
+    <!-- 3. Différence entre Docker et Kubernetes -->
+    <h2>3. Différence entre Docker et Kubernetes</h2>
+    <p>Docker et Kubernetes sont complémentaires, mais ils n'ont pas le même rôle.</p>
+    <p><strong>Docker</strong> est un outil de conteneurisation. Il sert à empaqueter une application avec ses dépendances dans un conteneur. Cela garantit que l'application se lance de manière identique sur différentes machines.</p>
+    <p><strong>Kubernetes</strong>, de son côté, n'est pas un outil de construction d'images, mais une plateforme d'orchestration. Son rôle est d'exécuter et d'administrer un ensemble de conteneurs sur un cluster.</p>
+    <p>On peut résumer la différence ainsi :</p>
+    <ul>
+      <li>Docker permet de <strong>créer et exécuter</strong> un conteneur ;</li>
+      <li>Kubernetes permet de <strong>gérer un ensemble de conteneurs à grande échelle</strong>.</li>
+    </ul>
+    <p>Exemple concret dans le TP :</p>
+    <ul>
+      <li>PostgreSQL, le backend Node.js et le frontend Nginx sont exécutés dans des conteneurs ;</li>
+      <li>Kubernetes se charge de les lancer, de les reconnecter entre eux, de les exposer et de les redémarrer si nécessaire.</li>
+    </ul>
+    <p>Docker répond donc au besoin d'empaquetage, tandis que Kubernetes répond au besoin d'exploitation en production.</p>
+    
+    <hr class="section-break" />
+    
+    <!-- 4. Rôle des Pods, Deployments et Services -->
+    <h2>4. Rôle des Pods, Deployments et Services</h2>
+    <h3>4.1 Les Pods</h3>
+    <p>Le Pod est l'unité minimale d'exécution dans Kubernetes. Un Pod peut contenir un ou plusieurs conteneurs partageant le même réseau et éventuellement le même stockage.</p>
+    <p>Dans ce TP :</p>
+    <ul>
+      <li>un Pod exécute le <strong>frontend</strong> ;</li>
+      <li>un Pod exécute le <strong>backend</strong> ;</li>
+      <li>un Pod exécute <strong>PostgreSQL</strong>.</li>
+    </ul>
+    <h3>4.2 Les Deployments</h3>
+    <p>Le Deployment permet de décrire l'état souhaité d'une application. Il indique notamment :</p>
+    <ul>
+      <li>quelle image utiliser ;</li>
+      <li>combien de réplicas lancer ;</li>
+      <li>comment mettre à jour l'application ;</li>
+      <li>comment redémarrer automatiquement les Pods si nécessaire.</li>
+    </ul>
+    <p>Dans ce TP, trois Deployments ont été utilisés :</p>
+    <ul>
+      <li><code>frontend</code></li>
+      <li><code>backend</code></li>
+      <li><code>postgres</code></li>
+    </ul>
+    <p>Le Deployment <code>backend</code> a également servi pour la démonstration de la scalabilité, en passant de 1 à 3 réplicas.</p>
+    <h3>4.3 Les Services</h3>
+    <p>Un Service Kubernetes permet d'exposer un ensemble de Pods sous une adresse réseau stable. Cela évite de dépendre de l'adresse IP d'un Pod, qui peut changer en cas de redémarrage.</p>
+    <p>Trois Services ont été créés :</p>
+    <ul>
+      <li><code>frontend-service</code> de type <code>LoadBalancer</code></li>
+      <li><code>backend-service</code> de type <code>ClusterIP</code></li>
+      <li><code>postgres-service</code> de type <code>ClusterIP</code></li>
+    </ul>
+    <p>Le service <code>LoadBalancer</code> a permis d'obtenir une adresse IP publique Azure afin d'accéder à l'application depuis le navigateur. Les services internes <code>ClusterIP</code> ont permis la communication entre le frontend, le backend et la base de données à l'intérieur du cluster.</p>
+    
+    <hr class="section-break" />
+    
+    <!-- 5. Architecture retenue pour le TP -->
+    <h2>5. Architecture retenue pour le TP</h2>
+    <p>L'architecture mise en place est volontairement simple, fonctionnelle et économique afin de respecter les contraintes du centre de formation et de limiter les coûts Azure.</p>
+    <h3>5.1 Architecture logique</h3>
+    <p>Le navigateur de l'utilisateur appelle le frontend publié sur Internet. Le frontend transmet ensuite les requêtes API au backend. Le backend interroge PostgreSQL pour stocker et lire les données.</p>
+    <p>Schéma simplifié :</p>
+    <pre><code>
+Utilisateur
+   |
+   v
+Frontend (Nginx) -- Service LoadBalancer --> Internet
+   |
+   v
+Backend (Node.js / Express) -- Service ClusterIP
+   |
+   v
+PostgreSQL -- Service ClusterIP + PVC
 </code></pre>
-    <div class="grid-stats" style="margin-bottom: 1rem;">
-      <div class="stat-card"><span class="badge-tech">🟢 Namespace</span> tp-k8s</div>
-      <div class="stat-card"><span class="badge-tech">📦 Postgres PVC</span> 1Gi</div>
-      <div class="stat-card"><span class="badge-tech">⚙️ Backend</span> Node.js 20 Alpine</div>
-      <div class="stat-card"><span class="badge-tech">🌍 Frontend</span> Nginx + reverse proxy</div>
+    <h3>5.2 Choix techniques</h3>
+    <p>Les choix retenus ont été les suivants :</p>
+    <ul>
+      <li><strong>AKS</strong> pour bénéficier d'un cluster Kubernetes managé sur Azure ;</li>
+      <li><strong>Node.js / Express</strong> pour le backend ;</li>
+      <li><strong>Nginx</strong> pour servir le frontend ;</li>
+      <li><strong>PostgreSQL</strong> comme base de données relationnelle ;</li>
+      <li><strong>PersistentVolumeClaim</strong> pour conserver les données PostgreSQL dans le cluster ;</li>
+      <li><strong>ConfigMap</strong> pour injecter le code du frontend et du backend sans dépendre d'un registre privé ACR.</li>
+    </ul>
+    <p>Ce dernier point a été particulièrement utile, car l'abonnement Azure mis à disposition ne permettait pas d'utiliser <code>Microsoft.ContainerRegistry</code>.</p>
+    
+    <hr class="section-break" />
+    
+    <!-- 6. Environnement et contraintes du projet -->
+    <h2>6. Environnement et contraintes du projet</h2>
+    <p>Le TP a été réalisé sur un poste Windows avec PowerShell. Plusieurs contraintes techniques ont dû être prises en compte :</p>
+    <ul>
+      <li>le groupe de ressources Azure était temporaire ;</li>
+      <li>il devait être détruit en fin de journée ;</li>
+      <li>il fallait éviter de créer des ressources inutiles ou coûteuses ;</li>
+      <li>Docker Desktop ne pouvait pas être utilisé correctement à cause de l'absence de virtualisation ;</li>
+      <li>l'abonnement Azure ne permettait pas l'enregistrement du provider <code>Microsoft.ContainerRegistry</code>.</li>
+    </ul>
+    <p>Pour contourner ces limites, la stratégie suivante a été retenue :</p>
+    <ul>
+      <li>installation de <code>Azure CLI</code> et <code>kubectl</code> ;</li>
+      <li>abandon de l'utilisation d'ACR ;</li>
+      <li>création d'un cluster AKS minimal avec un seul nœud ;</li>
+      <li>déploiement des composants à partir d'images publiques ;</li>
+      <li>injection du code de l'application via des <code>ConfigMap</code>.</li>
+    </ul>
+    <p>Cette stratégie a permis d'obtenir un résultat totalement fonctionnel tout en restant compatible avec les droits réels disponibles sur la souscription.</p>
+    <h3>Figure 1 : installation des outils nécessaires</h3>
+    <p>Cette capture montre l'installation de <code>Azure CLI</code>, <code>kubectl</code> et <code>Docker Desktop</code> via <code>winget</code>. Même si Docker n'a finalement pas été utilisé pour le déploiement final, cette étape faisait partie de la préparation de l'environnement.</p>
+    <div class="card-screenshot">
+      <img src="Images/capture-01-installation.png" alt="Installation des outils" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Installation+des+outils';">
+      <figcaption>Figure 1 — Installation des outils Azure CLI, kubectl et Docker Desktop</figcaption>
     </div>
-
-    <footer>
-      Rapport technique Kubernetes sur Azure — Yannick, AFCI Mars 2026 — Architecture validée, scaling opérationnel, résilience prouvée.
-    </footer>
-  </div>
-</div>
-</body>
-</html>
+    
+    <hr class="section-break" />
+    
+    <!-- 7. Mise en place de l'environnement Azure -->
+    <h2>7. Mise en place de l'environnement Azure</h2>
+    <h3>7.1 Connexion à Azure</h3>
+    <p>La connexion à Azure a été réalisée avec la commande :</p>
+    <pre><code>az login</code></pre>
+    <p>Une fois la session ouverte, il a été constaté qu'un groupe de ressources existait déjà :</p>
+    <ul><li><code>GR-9</code></li></ul>
+    <p>Ce groupe étant vide, il a été décidé d'y créer uniquement le cluster AKS nécessaire au TP.</p>
+    <h3>7.2 Vérification du groupe de ressources</h3>
+    <p>Une vérification préalable a permis de constater l'absence de ressources préexistantes :</p>
+    <ul>
+      <li>pas de cluster AKS ;</li>
+      <li>pas d'ACR ;</li>
+      <li>pas de machines virtuelles supplémentaires ;</li>
+      <li>pas de services réutilisables.</li>
+    </ul>
+    <h3>Figure 2 : lancement de la création du cluster AKS</h3>
+    <p>Cette capture montre la commande <code>az aks create</code> avec les variables de travail définies dans PowerShell et le démarrage du provisioning du cluster AKS dans Azure.</p>
+    <div class="card-screenshot">
+      <img src="Images/capture-02-creation-aks.png" alt="Création du cluster AKS" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Création+du+cluster+AKS';">
+      <figcaption>Figure 2 — Création du cluster AKS avec Azure CLI</figcaption>
+    </div>
+    <h3>7.3 Création du cluster AKS</h3>
+    <p>La première tentative avec la taille de machine <code>Standard_B2s</code> a échoué car ce SKU n'était pas autorisé dans la souscription utilisée. Après consultation du message d'erreur, une taille autorisée plus légère a été retenue :</p>
+    <ul><li><code>Standard_D2s_v3</code></li></ul>
+    <p>La création du cluster a été réalisée avec la commande suivante :</p>
+    <pre><code>
+az aks create `
+  --resource-group GR-9 `
+  --name aks-gr9-tp `
+  --location centralus `
+  --node-count 1 `
+  --node-vm-size Standard_D2s_v3 `
+  --enable-managed-identity `
+  --generate-ssh-keys
+</code></pre>
+    <p>Le cluster a été créé avec succès, puis les informations d'accès ont été récupérées avec :</p>
+    <pre><code>
+az aks get-credentials --resource-group GR-9 --name aks-gr9-tp --overwrite-existing
+kubectl get nodes
+</code></pre>
+    <p>Le nœud est apparu à l'état <code>Ready</code>, ce qui a validé la mise en service du cluster.</p>
+    
+    <hr class="section-break" />
+    
+    <!-- 8. Déploiement Kubernetes de l'application -->
+    <h2>8. Déploiement Kubernetes de l'application</h2>
+    <h3>8.1 Préparation des manifests</h3>
+    <p>Le projet a été structuré autour de plusieurs fichiers YAML Kubernetes :</p>
+    <ul>
+      <li><code>00-namespace.yaml</code></li>
+      <li><code>01-secret.yaml</code></li>
+      <li><code>02-postgres.yaml</code></li>
+      <li><code>03-backend.yaml</code></li>
+      <li><code>04-frontend.yaml</code></li>
+    </ul>
+    <p>Ces fichiers définissent respectivement :</p>
+    <ul>
+      <li>le namespace de travail ;</li>
+      <li>les secrets PostgreSQL ;</li>
+      <li>le déploiement et le stockage de PostgreSQL ;</li>
+      <li>le backend Node.js ;</li>
+      <li>le frontend Nginx et son exposition publique.</li>
+    </ul>
+    <h3>8.2 Namespace et secret</h3>
+    <p>Un namespace dédié <code>tp-k8s</code> a été créé afin d'isoler les ressources du TP dans le cluster. Un <code>Secret</code> a également été mis en place pour stocker les variables d'environnement PostgreSQL :</p>
+    <ul>
+      <li><code>POSTGRES_DB</code></li>
+      <li><code>POSTGRES_USER</code></li>
+      <li><code>POSTGRES_PASSWORD</code></li>
+      <li><code>DATABASE_URL</code></li>
+    </ul>
+    <h3>8.3 Déploiement de PostgreSQL</h3>
+    <p>PostgreSQL a été déployé avec :</p>
+    <ul>
+      <li>un <code>Deployment</code> ;</li>
+      <li>un <code>PersistentVolumeClaim</code> de 1 Go ;</li>
+      <li>un <code>Service</code> interne <code>ClusterIP</code>.</li>
+    </ul>
+    <p>Le stockage persistant a été nécessaire pour éviter la perte immédiate des données en cas de redémarrage du Pod.</p>
+    <h3>8.4 Déploiement du backend</h3>
+    <p>Le backend a été exécuté sur une image publique <code>node:20-alpine</code>. Le code <code>server.js</code> et le <code>package.json</code> ont été fournis via <code>ConfigMap</code>. Au démarrage, le conteneur :</p>
+    <ul>
+      <li>crée son répertoire de travail ;</li>
+      <li>copie les fichiers depuis la <code>ConfigMap</code> ;</li>
+      <li>installe les dépendances ;</li>
+      <li>lance le serveur Express.</li>
+    </ul>
+    <p>Le backend expose deux routes :</p>
+    <ul>
+      <li><code>/api/health</code> pour la supervision ;</li>
+      <li><code>/api/data</code> pour l'appel applicatif.</li>
+    </ul>
+    <p>La route <code>/api/data</code> incrémente un compteur dans PostgreSQL et retourne un JSON prouvant la communication entre les composants.</p>
+    <h3>8.5 Déploiement du frontend</h3>
+    <p>Le frontend s'appuie sur l'image <code>nginx:1.27-alpine</code>. Une page HTML simple est exposée via Nginx. Une configuration Nginx personnalisée permet de :</p>
+    <ul>
+      <li>servir le site statique ;</li>
+      <li>transférer les requêtes <code>/api/*</code> vers <code>backend-service</code>.</li>
+    </ul>
+    <p>Le frontend a été publié via un service <code>LoadBalancer</code>, ce qui a permis à Azure d'attribuer une adresse IP publique.</p>
+    <h3>8.6 Application des manifests</h3>
+    <p>Les commandes suivantes ont été utilisées :</p>
+    <pre><code>
+kubectl apply -f .\k8s\00-namespace.yaml
+kubectl apply -f .\k8s\01-secret.yaml
+kubectl apply -f .\k8s\02-postgres.yaml
+kubectl apply -f .\k8s\03-backend.yaml
+kubectl apply -f .\k8s\04-frontend.yaml
+</code></pre>
+    <h3>Figure 3 : application des manifests et récupération du contexte AKS</h3>
+    <p>Cette capture montre la récupération des identifiants Kubernetes avec <code>az aks get-credentials</code>, la vérification du nœud avec <code>kubectl get nodes</code>, puis l'application des différents manifests YAML.</p>
+    <div class="card-screenshot">
+      <img src="Images/capture-03-deploiement-yaml-1.png" alt="Déploiement YAML 1" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Déploiement+YAML';">
+      <figcaption>Figure 3 — Application des manifests et récupération du contexte AKS</figcaption>
+    </div>
+    <h3>Figure 4 : état initial des ressources et attribution de l'IP publique</h3>
+    <p>Cette capture met en évidence :</p>
+    <ul>
+      <li>la création des Pods ;</li>
+      <li>les services <code>ClusterIP</code> du backend et de PostgreSQL ;</li>
+      <li>le service <code>LoadBalancer</code> du frontend ;</li>
+      <li>l'attribution de l'IP publique <code>135.233.72.251</code>.</li>
+    </ul>
+    <div class="card-screenshot">
+      <img src="Images/capture-04-deploiement-yaml-2.png" alt="Déploiement YAML 2" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=IP+publique+attribuée';">
+      <figcaption>Figure 4 — Services actifs : frontend LoadBalancer obtient IP 135.233.72.251</figcaption>
+    </div>
+    
+    <hr class="section-break" />
+    
+    <!-- 9. Vérifications techniques et tests -->
+    <h2>9. Vérifications techniques et tests</h2>
+    <h3>9.1 Vérification des ressources Kubernetes</h3>
+    <p>Après déploiement, plusieurs commandes de contrôle ont été exécutées :</p>
+    <pre><code>
+kubectl get all -n tp-k8s
+kubectl get pods -n tp-k8s
+kubectl get svc -n tp-k8s
+</code></pre>
+    <p>L'application a ensuite obtenu une adresse IP publique via <code>frontend-service</code> :</p>
+    <ul><li><code>135.233.72.251</code></li></ul>
+    <p>Cette IP a permis d'ouvrir l'application dans le navigateur.</p>
+    <h3>9.2 Test fonctionnel de l'application</h3>
+    <p>Dans l'interface web, un bouton <code>Tester l'application</code> déclenche un appel vers <code>/api/data</code>. Le backend répond alors avec un message JSON contenant :</p>
+    <ul>
+      <li>le nom de l'application ;</li>
+      <li>le nom de la technologie backend ;</li>
