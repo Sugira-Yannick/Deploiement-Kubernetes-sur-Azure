@@ -335,11 +335,11 @@
 
     <!-- Captures modernisées (présentation en cartes) -->
     <div class="card-screenshot">
-      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-02-creation-aks.png" alt="Création du cluster AKS" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Capture+AKS+creation'; this.onerror=null;">
+      <img src="Images/capture-02-creation-aks.png" alt="Création du cluster AKS" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Capture+AKS+creation'; this.onerror=null;">
       <figcaption>Figure 1 — Création du cluster AKS avec Azure CLI, taille Standard_D2s_v3</figcaption>
     </div>
     <div class="card-screenshot">
-      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-03-deploiement-yaml-1.png" alt="Déploiement YAML" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Application+des+manifests';">
+      <img src="Images/capture-03-deploiement-yaml-1.png" alt="Déploiement YAML" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Application+des+manifests';">
       <figcaption>Figure 2 — Application des manifests YAML après connexion kubectl</figcaption>
     </div>
 
@@ -351,7 +351,7 @@ kubectl apply -f k8s/02-postgres.yaml
 kubectl apply -f k8s/03-backend.yaml
 kubectl apply -f k8s/04-frontend.yaml</code></pre>
     <div class="card-screenshot">
-      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-04-deploiement-yaml-2.png" alt="Ressources après déploiement" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=IP+publique+attribuée';">
+      <img src="Images/capture-04-deploiement-yaml-2.png" alt="Ressources après déploiement" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=IP+publique+attribuée';">
       <figcaption>Figure 3 — Services actifs : frontend LoadBalancer obtient IP 135.233.72.251</figcaption>
     </div>
 
@@ -364,7 +364,7 @@ kubectl apply -f k8s/04-frontend.yaml</code></pre>
     </div>
     <p>Depuis le navigateur, l’application frontend affiche un bouton “Tester l’application”. L’appel à <code>/api/data</code> a retourné un JSON contenant le compteur de visites, preuve irréfutable de la communication end-to-end (frontend → backend → base de données).</p>
     <div class="card-screenshot">
-      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-06-application-test-ok.png" alt="Test API réussi" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=API+JSON+visits+incrémenté';">
+      <img src="Images/capture-06-application-test-ok.png" alt="Test API réussi" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=API+JSON+visits+incrémenté';">
       <figcaption>Figure 4 — Réponse JSON du backend : communication complète validée, visits=1</figcaption>
     </div>
 
@@ -373,7 +373,7 @@ kubectl apply -f k8s/04-frontend.yaml</code></pre>
     <pre><code>kubectl scale deployment backend --replicas=3 -n tp-k8s</code></pre>
     <p>Kubernetes a instantanément créé deux Pods supplémentaires. L'équilibrage de charge est automatique via le service ClusterIP. Cette démonstration confirme l'élasticité native de K8s.</p>
     <div class="card-screenshot">
-      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-10-trois-backends-running.png" alt="Trois backends running" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=3+Pods+backend+en+Running';">
+      <img src="Images/capture-10-trois-backends-running.png" alt="Trois backends running" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=3+Pods+backend+en+Running';">
       <figcaption>Figure 5 — Après scaling : trois instances backend actives et prêtes</figcaption>
     </div>
 
@@ -387,7 +387,7 @@ kubectl apply -f k8s/04-frontend.yaml</code></pre>
     </ul>
     <div class="info-tag">💡 Ces corrections ont permis d’obtenir un environnement entièrement fonctionnel, sans dépendance à des services Azure supplémentaires.</div>
     <div class="card-screenshot">
-      <img src="file:///C:/Users/Administrateur/Desktop/Projet-Kubernetes-Cloud/Captures/capture-07-corrections-yaml.png" alt="Corrections YAML" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Corrections+appliquées';">
+      <img src="Images/capture-07-corrections-yaml.png" alt="Corrections YAML" onerror="this.src='https://placehold.co/800x400/eef2fa/2c7cb6?text=Corrections+appliquées';">
       <figcaption>Figure 6 — Réapplication des manifests corrigés, tous les Pods passent à l’état Running</figcaption>
     </div>
 
